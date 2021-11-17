@@ -25,8 +25,26 @@ public class App {
 				valoresX[i] = Math.round((valoresX[i-1] + h) * 100.0)/100.0;
 			}
 		}
-
+		
 		return valoresX;
+	}
+	
+	static Double calculaEquacao(Double x) {
+		// 3x² + 5x - 4
+		Double equacao = 3 * Math.pow(x, 2) + 5 * x - 4;
+		return Math.round(equacao * 100.0)/100.0;
+	}
+	
+	static Double[] montaColunaEquacoes(Double[] valoresX, int limite) {
+		Double[] equacoes = new Double[limite];
+		Double x;
+		
+		for (int i = 0; i < valoresX.length; i++) {
+			x = valoresX[i];
+			equacoes[i] = calculaEquacao(x);
+		}
+		
+		return equacoes;
 	}
 	
 	public static void main(String[] args) throws Exception {
@@ -36,10 +54,12 @@ public class App {
 		
 		Double h = calcularValorH(a, b, n);
 		int[] indices = montaColunaIndice(n);
-		Double[] colunaX = montaColunaX(a, b, h, indices.length);
-
-		for (int i = 0; i < colunaX.length; i++) {
-			System.out.println(colunaX[i]);
+		int limite = indices.length;
+		Double[] colunaX = montaColunaX(a, b, h, limite);
+		Double[] equacoes = montaColunaEquacoes(colunaX, limite);
+		
+		for (Double double1 : equacoes) {
+			System.out.println(double1);
 		}
 	}
 }
