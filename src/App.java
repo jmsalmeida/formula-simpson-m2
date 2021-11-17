@@ -21,7 +21,8 @@ public class App {
 			if (i == 0) {
 				valoresX[i] = (double) a;
 			} else {
-				valoresX[i] = valoresX[i-1] + h ;
+				// Gambiarra pra exibir duas casas decimais "Wtafucking fuck?"
+				valoresX[i] = Math.round((valoresX[i-1] + h) * 100.0)/100.0;
 			}
 		}
 
