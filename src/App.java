@@ -79,6 +79,21 @@ public class App {
     return impares;
   }
 
+  static String verificaNull(Double valor) {
+    return (valor == null) ? "" : valor.toString();
+
+  }
+
+  static void montaTabela(int[] indices, Double[] valoresX, Double[] equacoes, Double[] pares, Double[] impares, int limite) {
+    System.out.print(indices[0] + " | " + valoresX[0] + " | " + equacoes[0] + " | " + equacoes[0] + " | " + verificaNull(impares[0]) + " | " + verificaNull(pares[0]) + " | " + "\n");
+
+    for (int i = 1; i < limite -1; i++) {
+      System.out.print(indices[i] + " | " + valoresX[i] + " | " + equacoes[i] + " | " + "  " + " | " + verificaNull(impares[i]) + " | " + verificaNull(pares[i]) + " | " + "\n");
+    }
+
+    System.out.print(indices[limite - 1] + " | " + valoresX[limite - 1] + " | " + equacoes[limite - 1] + " | " + equacoes[limite - 1] + " | " + verificaNull(impares[limite - 1]) + " | " + verificaNull(pares[limite - 1]) + " | " + "\n");
+  }
+
   public static void main(String[] args) throws Exception {
     int n = 20;
     int a = 1;
@@ -92,8 +107,6 @@ public class App {
     Double[] pares = montaColunaPares(equacoes, limite);
     Double[] impares = montaColunaImpares(equacoes, limite);
 
-    for (Double double1 : impares) {
-      System.out.println(double1);
-    }
+    montaTabela(indices, valoresX, equacoes, pares, impares, limite);
   }
 }
