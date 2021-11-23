@@ -1,3 +1,5 @@
+import java.text.Format;
+
 public class App {
   static Double calcularValorH(int a, int b, int n) {
     Double h = ((double) b - (double) a) / (double) n;
@@ -80,18 +82,44 @@ public class App {
   }
 
   static String verificaNull(Double valor) {
-    return (valor == null) ? "" : valor.toString();
-
+    return (valor == null) ? "    " : valor.toString();
   }
 
   static void montaTabela(int[] indices, Double[] valoresX, Double[] equacoes, Double[] pares, Double[] impares, int limite) {
-    System.out.print(indices[0] + " | " + valoresX[0] + " | " + equacoes[0] + " | " + equacoes[0] + " | " + verificaNull(impares[0]) + " | " + verificaNull(pares[0]) + " | " + "\n");
+    System.out.println("Método Simpson");
+    System.out.println("Equação: 3x² + 5x - 4");
+    System.out.println("=====================================================================");
+
+
+    System.out.printf("%-12s%-12s%-12s%-12s%-12s%-12s\n", "i", "x", "f(x)", "E", "impares", "pares");
+    System.out.println("_____________________________________________________________________");
+    System.out.printf("%-12s%-12s%-12s%-12s%-12s%-12s\n", indices[0], valoresX[0], equacoes[0], equacoes[0], verificaNull(impares[0]), verificaNull(pares[0]));
+    System.out.println("_____________________________________________________________________");
 
     for (int i = 1; i < limite -1; i++) {
-      System.out.print(indices[i] + " | " + valoresX[i] + " | " + equacoes[i] + " | " + "  " + " | " + verificaNull(impares[i]) + " | " + verificaNull(pares[i]) + " | " + "\n");
+      System.out.printf("%-12s%-12s%-12s%-12s%-12s%-12s\n", indices[i], valoresX[i], equacoes[i], " ", verificaNull(impares[i]), verificaNull(pares[i]));
+      System.out.println("_____________________________________________________________________");
     }
 
-    System.out.print(indices[limite - 1] + " | " + valoresX[limite - 1] + " | " + equacoes[limite - 1] + " | " + equacoes[limite - 1] + " | " + verificaNull(impares[limite - 1]) + " | " + verificaNull(pares[limite - 1]) + " | " + "\n");
+    System.out.printf("%-12s%-12s%-12s%-12s%-12s%-12s\n", indices[limite-1], valoresX[limite-1], equacoes[limite-1], equacoes[limite-1], verificaNull(impares[limite-1]), verificaNull(pares[limite-1]));
+    System.out.println("_____________________________________________________________________");
+  }
+
+  static Double somaArray(Double[] arr) {
+    Double soma = 0.0;
+
+    for (Double double1 : arr) {
+      if (double1 != null) {
+        soma += double1;
+      }
+    }
+
+    return Math.round(soma * 100.0)/100.0;
+  }
+
+  static Double integral(Double h, Double somaExtremos, Double somaImpares, Double somaPares) {
+    // h/3*(E+4*I+2*P)
+    return h/3 * (somaExtremos + 4 * somaImpares + 2 * somaPares);
   }
 
   public static void main(String[] args) throws Exception {
@@ -107,6 +135,19 @@ public class App {
     Double[] pares = montaColunaPares(equacoes, limite);
     Double[] impares = montaColunaImpares(equacoes, limite);
 
+    Double somaExtremos = equacoes[0] + equacoes[limite - 1];
+    Double somaImpares = somaArray(impares);
+    Double somaPares = somaArray(pares);
+
     montaTabela(indices, valoresX, equacoes, pares, impares, limite);
+
+    System.out.println();
+    System.out.println("Σ Extremos  = " + somaExtremos);
+    System.out.println("Σ Impares  = " + somaImpares);
+    System.out.println("Σ Pares = " + somaPares);
+
+    System.out.println();
+    System.out.println("h/3*(ΣE+4 * ΣI+2 * ΣP)");
+    System.out.println("I = " + integral(h, somaExtremos, somaImpares, somaPares));
   }
 }
